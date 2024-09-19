@@ -1,21 +1,6 @@
 import aiohttp, asyncio
 
-# from core.config import WB_API_TOKEN, URL, PATH
-
-import dotenv
-import os
-
-from dotenv import load_dotenv
-
-load_dotenv(dotenv_path = '.env')
-
-WB_API_TOKEN = os.getenv('WB_API_TOKEN', '')
-
-PATH = {
-    'auth': '/api/v1/offers/author',
-}
-
-URL = 'devapi-digital.wildberries.ru'
+from core.config import WB_API_TOKEN, URL, PATH
 
 
 class Session:
@@ -24,19 +9,23 @@ class Session:
         self.wb_api_token: str = WB_API_TOKEN
         self.url: str = URL
         self.path: str = PATH['auth']
-        self.headers: dict = {'Content-Type': 'applycation/json'}
         self.auth: str = 'Bearer' + ' ' + self.wb_api_token
+        self.headers: dict = {'Content-Type': 'applycation/json', 'Authorization': self.auth}
+
         
     async def login(self):
         async with aiohttp.ClientSession() as session:
-            async with session.post(
-                url = self.url + self.path,
-                headers = self.headers
+            async with session.get(
+                url = 'https://devapi-digital.wildberries.ru/api/v1/offers/author',
+                headers = self.headers,
+                params = {'Authorization': self.auth},
+                json = {
+                    'Authorization': self.auth
+                }
             ) as respond:
-                return respond.headers
+                return respond.headers.get()
             
 
             
             
 login = Session().login()
-asyncio.run(login)
