@@ -9,6 +9,9 @@ WB_API_TOKEN = os.getenv('WB_API_TOKEN', '')
 
 PATH = {
     'auth': '/api/v1/offers/author',
+    'coefficients': '/api/v1/acceptance/coefficients'
 }
 
-URL = 'devapi-digital.wildberries.ru'
+URL_DIGITAL = 'https://devapi-digital.wildberries.ru'
+
+URL_OPENAPI = 'https://supplies-api.wildberries.ru'
