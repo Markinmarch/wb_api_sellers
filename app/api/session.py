@@ -29,5 +29,5 @@ class Session:
 
             
             
-# login = Session().login()
+login = Session().login()
 print(WB_API_TOKEN)
